@@ -9,6 +9,10 @@ RUN cd /tmp \
     && echo "$JQ_SHA256  /usr/bin/jq" | sha256sum -c - \
     && chmod +x /usr/bin/jq
 
+# install repository-s3 plugin to enable functionality of snapshot/restore
+RUN /usr/share/elasticsearch/bin/elasticsearch-plugin install repository-s3
+RUN /usr/share/elasticsearch/bin/elasticsearch-plugin install discovery-ec2
+
 # https://www.elastic.co/guide/en/elasticsearch/reference/current/docker.html#_c_customized_image
 ADD elasticsearch.yml /usr/share/elasticsearch/config/
 RUN chown elasticsearch:elasticsearch config/elasticsearch.yml
